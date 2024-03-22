@@ -1,7 +1,5 @@
 library adblock_detector;
 
-import 'dart:io';
-
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 

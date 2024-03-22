@@ -1,7 +1,7 @@
 name: adblock_detector
 description: "Cross Platform AdBlock Detector for Flutter. Detects if the user has an AdBlocker enabled."
 version: 0.0.1
-homepage:
+homepage: https://github.com/SethuSenthil/adblock_detector
 
 environment:
   sdk: '>=3.3.1 <4.0.0'
