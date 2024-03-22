@@ -1,39 +1,55 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+Cross Platform AdBlock Detector for Flutter. Detects if the user has an AdBlocker enabled.
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+<img src="./logo.png" height="300">
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- Check if a user has a DNS level AdBlocker enabled (PiHole, AdGuard DNS, uBlock, brave shields)
+- Check if a user has AdGuard DNS enabled
 
-## Getting started
+## Warning
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Please use this package responsibly!
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
 ```dart
-const like = 'sample';
+AdBlockDetector adBlockDetector = AdBlockDetector();
+
+bool isAdblocking = await adBlockDetector
+              .isAdBlockEnabled(testAdNetworks: [AdNetworks.googleAdMob]);
+```
+- Built In Ad Networks: AdNetworks.googleAdMob, AdNetworks.mediaNet, AdNetworks.appSumari, AdNetworks.startApp, AdNetworks.adColony
+- Keep in mind some AdNetworks are blocked in some countries (like China). Google AdMob is not blocked in China
+
+### Passing in Custom Ad Networks
+```dart
+AdBlockDetector adBlockDetector = AdBlockDetector();
+
+bool isAdblocking = await adBlockDetector
+              .isAdBlockEnabled(testAdNetworks: [], customAdNetworks[Uri.parse('https://a-test-url-for-the-adnetwork.com')]);
 ```
 
-## Additional information
+### Checking Network Connectivity
+- By default, this package will attempt to send a get request to https://example.com to check if we have internet connection
+- If no internet connection is detected, `isAdBlockEnabled()` will return false (this is to prevent false positives)
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+You can change the test URL as shown below. Keep in mind not all URLs are available everywhere (google.com is blocked in China)
+
+```dart
+AdBlockDetector adBlockDetector = AdBlockDetector(testHost: 'https://somewebsite.com/');
+
+bool isAdblocking = await adBlockDetector
+              .isAdBlockEnabled(testAdNetworks: [AdNetworks.googleAdMob]);
+```
+- Make sure it is a valid URL, and that the URL returns a 200 status code (not 404 page not found, otherwise that will be considered as the device being offline)
+
+
+### Checking if a user is using AdGuard DNS
+- AdGuard DNS is a popular way to do DNS level adblocking. If you would like to show instruction on how to disable it, or collect analytics for whatever reason you can do so like this:
+
+
+```dart
+AdBlockDetector adBlockDetector = AdBlockDetector();
+bool isAdGuardDns = await adBlockDetector.isAdguardDNS();
+```
