@@ -1,6 +1,6 @@
 Cross Platform AdBlock Detector for Flutter. Detects if the user has an AdBlocker enabled.
 
-<img src="./logo.png" height="300">
+<img src="https://github.com/SethuSenthil/adblock_detector/raw/main/logo.png" height="300">
 
 ## Features
 
@@ -37,7 +37,10 @@ bool isAdblocking = await adBlockDetector
 You can change the test URL as shown below. Keep in mind not all URLs are available everywhere (google.com is blocked in China)
 
 ```dart
-AdBlockDetector adBlockDetector = AdBlockDetector(testHost: 'https://somewebsite.com/');
+AdBlockDetector adBlockDetector = AdBlockDetector();
+
+adBlockDetector.testHost = Uri.parse('https://cdn.vibin.llc/test.txt');
+// this URL is self hosted and saved bandwidth rather than loading example.com's HTML
 
 bool isAdblocking = await adBlockDetector
               .isAdBlockEnabled(testAdNetworks: [AdNetworks.googleAdMob]);
@@ -46,7 +49,7 @@ bool isAdblocking = await adBlockDetector
 
 
 ### Checking if a user is using AdGuard DNS
-- AdGuard DNS is a popular way to do DNS level adblocking. If you would like to show instruction on how to disable it, or collect analytics for whatever reason you can do so like this:
+- AdGuard DNS is a popular way to do DNS-level adblocking. If you would like to show instructions on how to disable it, or collect analytics for whatever reason you can do so like this:
 
 
 ```dart

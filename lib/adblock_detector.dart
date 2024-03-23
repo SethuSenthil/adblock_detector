@@ -13,9 +13,9 @@ enum AdNetworks {
 
 /// A class that detects the presence of ad blockers.
 class AdBlockDetector {
-  String testHost;
+  Uri testHost = Uri.parse('https://example.com');
 
-  AdBlockDetector({this.testHost = 'example.com'});
+  AdBlockDetector();
 
   /// Checks if AdGuard DNS is being used.
   ///
@@ -47,7 +47,7 @@ class AdBlockDetector {
   /// Returns `true` if the device is connected to the internet, `false` otherwise.
   Future<bool> isInternetConnected() async {
     try {
-      Response res = await http.get(Uri.parse('http://$testHost'));
+      Response res = await http.get(testHost);
       if (res.statusCode == 200) {
         return true;
       }
